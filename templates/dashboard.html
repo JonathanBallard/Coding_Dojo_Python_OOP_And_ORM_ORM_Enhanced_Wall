@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,
+    initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script defer type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <title>Dashboard - Enhanced Wall</title>
+</head>
+<body>
+<div class="wrapper container">
+    <h1>Enhanced Wall - Dashboard</h1>
+
+    <a href="/logout">Logout</a>
+
+    <form class="form-group" action="/tweets/create" method="POST">
+    
+        <h3>Write a Tweet:</h3>
+        <textarea name="tweet" cols="30" rows="10" placeholder="tweet"></textarea>
+
+        <input type="hidden" name="formType" value="createTweet">
+        <input class="btn btn-primary" type="submit" value="Tweet">
+    </form>
+    <hr>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Created By:</th>
+            <th>Tweet:</th>
+            <th>Likes:</th>
+            <th>Details:</th>
+            <th>Actions:</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for tweet in tweets %}
+        <tr>
+            <td>{{ tweet.user_id }}</td>
+            <td>{{ tweet.tweet }} </td>
+            <td>{{ tweet.likes }} </td>
+            <td><a href="/tweets/{{tweet.id}}/details">Details</a></td>
+            {% if tweet.user_id == currentUserid %}
+                <td><a href="/tweets/{{ tweet.id }}/delete">Delete</a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+
+
+
+
+    </tbody>
+
+
+</table>
+
+
+
+    <hr>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+
+</div>
+
+
+</body>
+</html>
