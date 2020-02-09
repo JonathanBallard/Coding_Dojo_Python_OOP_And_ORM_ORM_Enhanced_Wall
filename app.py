@@ -1,5 +1,9 @@
 
 
+# TODO:
+# Messages on wall sorted by number of likes
+# If you like your own message, you go to bottom of likes list
+
 from flask import Flask, render_template, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy			# instead of mysqlconnection
 from flask_bcrypt import Bcrypt
